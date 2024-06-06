@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using SpaDay6.Models;
+using SpaDay6.ViewModels;
 
 namespace SpaDay6.Controllers
 {
@@ -6,12 +8,39 @@ namespace SpaDay6.Controllers
     {
         public IActionResult Add()
         {
-            return View();
+            AddUserViewModel addUserViewModel = new();
+            return View(addUserViewModel);
         }
 
-        public IActionResult SubmitAddUserForm()
+        [HttpPost]
+        [Route("/user")]
+        public IActionResult SubmitAddUserForm(AddUserViewModel addUserViewModel)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                if(addUserViewModel.Password == addUserViewModel.VerifyPassword)
+                {
+                    User newUser = new()
+                {
+                    Username = addUserViewModel.Username,
+                    Password = addUserViewModel.Password,
+                    Email = addUserViewModel.Email,
+                };
+
+                return View("Index", newUser);
+
+                }
+                else
+                {
+                    return View("Add", addUserViewModel);
+                }
+            }
+            else
+            {
+
+                return View("Add", addUserViewModel);
+            }
+
         }
     }
 }

@@ -7,11 +7,11 @@ namespace SpaDay6.Models
         private string Password { get; set; }
         public string Email { get; set; }
 
-        public User(string username, string email, string password)
+        public User(string u, string e, string p)
         {
-            Username = username;
-            Email = email;
-            Password = password;
+            Username = u;
+            Email = e;
+            Password = p;
         }
     }
 }
